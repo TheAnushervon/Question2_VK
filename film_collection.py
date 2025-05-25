@@ -1,5 +1,4 @@
-from typing import Optional
-
+from typing import Dict, Optional
 class Film:
     def __init__(self, title: str, genre: Optional[str] = None, year: Optional[int] = None, director: Optional[str] = None):
         
@@ -44,3 +43,15 @@ class FilmCollection:
             return True
         print(f"Error: Film with title '{title}' not found in the collection.")
         return False
+    
+    def find_film_by_title(self, title: str) -> Optional[Film]:
+        return self._films.get(title)
+
+    def list_all_films(self) -> None:
+        if not self._films:
+            print("The film collection is empty.")
+            return
+        print("\n--- Film Collection ---")
+        for i, film in enumerate(self._films.values(), 1):
+            print(f"{i}. {film}")
+        print("----------------------")
