@@ -48,6 +48,21 @@ class FilmCollection:
     def find_film_by_title(self, title: str) -> Optional[Film]:
         return self._films.get(title)
 
+    def find_films(self, query: str, search_by: str = "title") -> List[Film]:
+        results: List[Film] = []
+        query_lower = query.lower()
+
+        for film in self._films.values():
+            if search_by == "title" and query_lower in film.title.lower():
+                results.append(film)
+            elif search_by == "genre" and film.genre and query_lower in film.genre.lower():
+                results.append(film)
+            elif search_by == "year" and film.year and query == str(film.year):
+                results.append(film)
+            elif search_by == "director" and film.director and query_lower in film.director.lower():
+                results.append(film)
+        return results
+    
     def __iter__(self) -> Iterator[Film]:
         return FilmCollectionIterator(self._films)
 
