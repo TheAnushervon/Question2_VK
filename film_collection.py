@@ -94,3 +94,93 @@ class FilmCollectionIterator:
             self._index += 1
             return film
         raise StopIteration
+
+if __name__ == "__main__":
+   
+    cinema_collection = FilmCollection()
+
+   
+    film1 = Film(title="Inception", genre="Sci-Fi", year=2010, director="Christopher Nolan")
+    film2 = Film(title="The Shawshank Redemption", genre="Drama", year=1994, director="Frank Darabont")
+    film3 = Film(title="Pulp Fiction", genre="Crime", year=1994, director="Quentin Tarantino")
+    film4 = Film(title="The Dark Knight", genre="Action", year=2008, director="Christopher Nolan")
+    film5 = Film(title="Forrest Gump", genre="Drama", year=1994, director="Robert Zemeckis")
+
+    cinema_collection.add_film(film1)
+    cinema_collection.add_film(film2)
+    cinema_collection.add_film(film3)
+    cinema_collection.add_film(film4)
+    
+  
+    cinema_collection.add_film(Film(title="Inception", genre="Thriller"))
+
+   
+    print("\nListing all films:")
+    cinema_collection.list_all_films()
+
+  
+    print("\nIterating through films:")
+    for film in cinema_collection:
+        print(f"- {film.title}")
+
+   
+    print("\nFinding 'Pulp Fiction':")
+    found_film = cinema_collection.find_film_by_title("Pulp Fiction")
+    if found_film:
+        print(f"Found: {found_film}")
+    else:
+        print("Film not found.")
+
+    print("\nFinding 'Avatar' (should not be found):")
+    found_film_non_existent = cinema_collection.find_film_by_title("Avatar")
+    if found_film_non_existent:
+        print(f"Found: {found_film_non_existent}")
+    else:
+        print("Film 'Avatar' not found.")
+
+   
+    print("\nSearching for films directed by 'Christopher Nolan':")
+    nolan_films = cinema_collection.find_films(query="Christopher Nolan", search_by="director")
+    if nolan_films:
+        for film in nolan_films:
+            print(film)
+    else:
+        print("No films found by that director.")
+
+    print("\nSearching for films with genre 'Drama':")
+    drama_films = cinema_collection.find_films(query="Drama", search_by="genre")
+    if drama_films:
+        for film in drama_films:
+            print(film)
+    else:
+        print("No films found with that genre.")
+
+    print("\nSearching for films from year '1994':")
+    films_1994 = cinema_collection.find_films(query="1994", search_by="year")
+    if films_1994:
+        for film in films_1994:
+            print(film)
+    else:
+        print("No films found from that year.")
+
+   
+    print("\nRemoving 'The Dark Knight':")
+    cinema_collection.remove_film("The Dark Knight")
+    cinema_collection.remove_film("The Dark Knight") 
+
+    
+    print("\nListing all films after removal:")
+    cinema_collection.list_all_films()
+
+    print(f"\nNumber of films in collection: {len(cinema_collection)}")
+
+  
+    try:
+        invalid_film = Film(title="")
+        cinema_collection.add_film(invalid_film)
+    except ValueError as e:
+        print(f"\nError creating film: {e}")
+
+    
+    cinema_collection.add_film(film5)
+    cinema_collection.list_all_films()
