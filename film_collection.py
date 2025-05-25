@@ -22,3 +22,25 @@ class Film:
 
     def __repr__(self) -> str:
         return f"Film(title='{self.title}', genre='{self.genre}', year={self.year}, director='{self.director}')"
+
+class FilmCollection:
+    
+    def __init__(self) -> None:
+       
+        self._films: Dict[str, Film] = {}
+
+    def add_film(self, film: Film) -> bool:
+        if film.title in self._films:
+            print(f"Error: Film with title '{film.title}' already exists in the collection.")
+            return False
+        self._films[film.title] = film
+        print(f"Film '{film.title}' added to the collection.")
+        return True
+
+    def remove_film(self, title: str) -> bool:
+        if title in self._films:
+            del self._films[title]
+            print(f"Film '{title}' removed from the collection.")
+            return True
+        print(f"Error: Film with title '{title}' not found in the collection.")
+        return False
